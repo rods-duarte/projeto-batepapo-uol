@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bate-papo uol</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Barra do topo -->
+    <header>
+        <img class="logo" src="img/logo.png" alt="Logo UOL">
+        <ion-icon class="side-bar-button" onclick="abrirSideBar()" name="people"></ion-icon>
+    </header>
+    <!-- Menu lateral -->
+    <aside>
+        <div class="side-bar">
+            <h1>Escolha um contato para enviar mensagem:</h1>
+            <section>
+                <div class="opcao">
+                    <ion-icon name="people"></ion-icon>
+                    <span>Todos</span>
+                </div>
+                <div class="opcao">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <span>Joao</span>
+                </div>
+                <div class="opcao">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <span>Maria</span>
+                </div>
+            </section>
+            <h1>Escolha visibilidade:</h1>
+            <section>
+                <div class="opcao">
+                    <ion-icon name="lock-open"></ion-icon>
+                    <span>Publico</span>
+                </div>
+                <div class="opcao">
+                    <ion-icon name="lock-closed"></ion-icon>
+                    <span>Privado</span>
+                </div>
+            </section>
+        </div>
+    </aside>
+    <!-- Mensagens -->
+    <main class="chat">
+        <!-- Mensagem -->
+        <div class="caixa-mensagem status">
+            <div class="mensagem">
+                <span class="hora">(9:38:26)</span>
+                <strong class="usuario">Pedro:</strong>
+                <span class=texto>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae voluptas fugit quae molestias quod, facere iure! Tempore voluptates, explicabo molestiae enim, a, obcaecati dolores earum expedita velit fugiat accusamus aut! </span>
+            </div>
+        </div>
+        <!-- Mensagem -->
+        <div class="caixa-mensagem privada">
+            <div class="mensagem">
+                <span class="hora">(9:38:26)</span>
+                <strong class="usuario">Pedro:</strong>
+                <span class=texto>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae voluptas fugit quae molestias quod, facere iure! Tempore voluptates, explicabo molestiae enim, a, obcaecati dolores earum expedita velit fugiat accusamus aut! </span>
+            </div>
+        </div>
+        <!-- Mensagem -->
+        <div class="caixa-mensagem">
+            <div class="mensagem">
+                <span class="hora">(9:38:26)</span>
+                <strong class="usuario">Pedro:</strong>
+                <span class=texto>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae voluptas fugit quae molestias quod, facere iure! Tempore voluptates, explicabo molestiae enim, a, obcaecati dolores earum expedita velit fugiat accusamus aut! </span>
+            </div>
+        </div>
+    </main>
+    <!-- Input de mensagens -->
+    <footer>
+        <input type="text" placeholder="Escreva aqui...">
+        <ion-icon name="paper-plane-outline"></ion-icon>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
