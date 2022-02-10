@@ -8,6 +8,7 @@ let promiseNomeUsuario = axios.post(
 );
 
 promiseNomeUsuario.catch(checaNome);
+promiseNomeUsuario.then(verificaPresenca);
 
 promiseMensagens.then(processarRespostaMensagem);
 
@@ -16,8 +17,11 @@ function processarRespostaMensagem(resposta) {
   receberMensagens(resposta.data);
 }
 
-function teste(resposta) {
-  console.log(resposta.status);
+// Envia pro servidor que o usuario esta presente
+function verificaPresenca() {
+    setInterval(() => {
+        let promisePresenca = axios.post(`https://mock-api.driven.com.br/api/v4/uol/status`, {name: nomeUsuario})
+    }, 5000);
 }
 
 // Solicita um novo nome de usuario caso ja esteja em uso
@@ -34,7 +38,6 @@ function checaNome() {
 function receberMensagens(mensagens) {
   const chat = document.querySelector(`.chat`);
   for (let index = 0; index < mensagens.length; index++) {
-    //TODO mandar todas as msgs (codigo comentado abaixo)
     switch (mensagens[index].type) {
       case `status`:
         chat.innerHTML += `
@@ -83,15 +86,17 @@ function receberMensagens(mensagens) {
     );
     promiseNovasMensagens.then((resposta) => {
       let novasMensagens = resposta.data;
-      for (let i = 0; i < mensagens.length; i++) {
-        for (let j = 0; j < novasMensagens.length; j++) {
-          if (novasMensagens[j] === mensagens[i]) {
-            novasMensagens.splice(j, 1);
-          }
-        }
-      }
-      mensagens = mensagens.concat(novasMensagens);
-      for (let index = 0; index < novasMensagens.length; index++) {
+      let i = novasMensagens.length;
+      while (mensagens[mensagens.length - 1].time != novasMensagens[i - 1].time) {
+          console.log(i);
+        console.log(`entrou while`);
+        i--;
+      } // verifica o index da ultima mensagem recebida pelo usuario
+
+      console.log(`saiu while`);
+      mensagens = novasMensagens;
+      for (let index = i; index < novasMensagens.length; index++) { // faz o display das mensagens novas
+        console.log(`entrou for do switch`);
         switch (novasMensagens[index].type) {
           case `status`:
             chat.innerHTML += `
@@ -104,7 +109,7 @@ function receberMensagens(mensagens) {
                   </div>
                 </div>`;
             chat.lastChild.scrollIntoView();
-            
+
             break;
           case `private_message`:
             chat.innerHTML += `
@@ -117,7 +122,7 @@ function receberMensagens(mensagens) {
                 </div>
               </div>`; //TODO Implementar funcao que so envia esta mensagem se usuario === .to
             chat.lastChild.scrollIntoView();
-            
+
             break;
           case `message`:
             chat.innerHTML += `
@@ -130,7 +135,7 @@ function receberMensagens(mensagens) {
                     </div>
                   </div>`;
             chat.lastChild.scrollIntoView();
-            
+
             break;
         }
       }
@@ -138,18 +143,11 @@ function receberMensagens(mensagens) {
   }, 3000);
 }
 
-function Mensagem(from, to, text, type) {
+//TODO Envio de mensagem
+function Mensagem(from, to, text, type) {  
   this.from = from;
   this.to = to;
   this.text = text;
   this.type = type;
 }
 
-//TODO Entrada na sala
-//TODO Envio de mensagem
-
-// criar um array -> salvar as msg nesse array -> 3s -> buscar novo array2 -> comparar array com array2
-// -> imprimir o que sobrar no array2 -> adicionar o que sobrar do array2 no array
-
-/*
- */

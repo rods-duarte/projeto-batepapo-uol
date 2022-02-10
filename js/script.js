@@ -12,3 +12,5 @@ function fecharSideBar() {
     sideBar.style.width = 0;
     fecharSideBar.classList.remove(`cor`);
 }
+
+//TODO criar funcoes para selecionar remetente e visibilidade
