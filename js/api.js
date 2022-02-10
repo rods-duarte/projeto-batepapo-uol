@@ -6,22 +6,39 @@ let promiseNomeUsuario = axios.post(
   `https://mock-api.driven.com.br/api/v4/uol/participants `,
   { name: nomeUsuario }
 );
-
+let promiseParticipantes = axios.get(
+  `https://mock-api.driven.com.br/api/v4/uol/participants`
+);
+promiseParticipantes.then(carregaListaDeParticipantes);
 promiseNomeUsuario.catch(checaNome);
 promiseNomeUsuario.then(verificaPresenca);
 
 promiseMensagens.then(processarRespostaMensagem);
+
+// Atualiza a lista de participantes no sidebar
+setInterval(() => {
+  let promiseParticipantes = axios.get(
+    `https://mock-api.driven.com.br/api/v4/uol/participants`
+  );
+  promiseParticipantes.then(carregaListaDeParticipantes);
+}, 10000);
 
 // Processa o Promise mensagens
 function processarRespostaMensagem(resposta) {
   receberMensagens(resposta.data);
 }
 
+function processaRespostaLista(resposta) {
+  carregaListaDeParticipantes(resposta.data);
+}
+
 // Envia pro servidor que o usuario esta presente
 function verificaPresenca() {
-    setInterval(() => {
-        let promisePresenca = axios.post(`https://mock-api.driven.com.br/api/v4/uol/status`, {name: nomeUsuario})
-    }, 5000);
+  setInterval(() => {
+    axios.post(`https://mock-api.driven.com.br/api/v4/uol/status`, {
+      name: nomeUsuario,
+    });
+  }, 5000);
 }
 
 // Solicita um novo nome de usuario caso ja esteja em uso
@@ -87,16 +104,14 @@ function receberMensagens(mensagens) {
     promiseNovasMensagens.then((resposta) => {
       let novasMensagens = resposta.data;
       let i = novasMensagens.length;
-      while (mensagens[mensagens.length - 1].time != novasMensagens[i - 1].time) {
-          console.log(i);
-        console.log(`entrou while`);
+      while (
+        mensagens[mensagens.length - 1].time != novasMensagens[i - 1].time
+      ) {
         i--;
       } // verifica o index da ultima mensagem recebida pelo usuario
-
-      console.log(`saiu while`);
       mensagens = novasMensagens;
-      for (let index = i; index < novasMensagens.length; index++) { // faz o display das mensagens novas
-        console.log(`entrou for do switch`);
+      for (let index = i; index < novasMensagens.length; index++) {
+        // faz o display das mensagens novas
         switch (novasMensagens[index].type) {
           case `status`:
             chat.innerHTML += `
@@ -143,11 +158,44 @@ function receberMensagens(mensagens) {
   }, 3000);
 }
 
-//TODO Envio de mensagem
-function Mensagem(from, to, text, type) {  
+// Carrega a lista de participantes no sidebar
+function carregaListaDeParticipantes(resposta) {
+  let section = document.querySelector(`#membros`);
+  let listaParticipantesServer = resposta.data;
+  section.innerHTML = ``;
+  for (index = 0; index < listaParticipantesServer.length; index++) {
+      if(listaParticipantesServer[index].name != nomeUsuario) {
+        section.innerHTML += `
+        <div id="${listaParticipantesServer[index].name}" class="opcao">
+            <ion-icon name="person-circle"></ion-icon>
+            <span>${listaParticipantesServer[index].name}</span>
+        </div>
+              `;
+      }
+    
+  }
+}
+
+/*
+let mensagemTexto = document.querySelector(`input`).value;
+let mensagem = new Mensagem(nomeUsuario, #, mensagemTexto, #);
+const promiseMensagem = axios.post(`https://mock-api.driven.com.br/api/v4/uol/messages`, )
+*/
+//! Implementar depois que setar o .type e .to
+
+//TODO Lista de membros no sidebar dinamica (1)
+//TODO Selecao de remetente e visibilidade (2) -> lembrar que se selecionar remetente e ele sair, resetar para 'todos'
+//TODO Envio de mensagem (2)
+function Mensagem(from, to, text, type) {
   this.from = from;
   this.to = to;
   this.text = text;
   this.type = type;
 }
 
+/**
+ * ! Lembrar que ->
+ * let secao = document.querySelector(`#membros`);
+ * let membros = secao.querySelectorAll(`.opcao`);
+ * membros[0].querySelector(`span`).textContent -> `Nome Pessoa`
+ */
