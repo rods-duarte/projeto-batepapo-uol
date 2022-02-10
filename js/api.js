@@ -43,7 +43,7 @@ function verificaPresenca() {
 
 // Solicita um novo nome de usuario caso ja esteja em uso
 function checaNome() {
-  nomeUsuario = prompt(`Nome ja utilizado, tente outro`);
+  nomeUsuario = prompt(`Este nome ja esta em uso. Por favor escolha outro`);
   promiseNomeUsuario = axios.post(
     `https://mock-api.driven.com.br/api/v4/uol/participants `,
     { name: nomeUsuario }
@@ -51,10 +51,10 @@ function checaNome() {
   promiseNomeUsuario.catch(checaNome);
 }
 
-// Recebe e envia mensagens ao usuario
+// Recebe as mensagens disponiveis no servidor
 function receberMensagens(mensagens) {
   const chat = document.querySelector(`.chat`);
-  for (let index = 0; index < mensagens.length; index++) {
+  for (let index = 0; index < mensagens.length; index++) { //TODO Refatorar em uma so funcao *
     switch (mensagens[index].type) {
       case `status`:
         chat.innerHTML += `
@@ -97,6 +97,8 @@ function receberMensagens(mensagens) {
         break;
     }
   }
+
+  // Recebe as mensagens novas do Servidor 
   setInterval(() => {
     promiseNovasMensagens = axios.get(
       `https://mock-api.driven.com.br/api/v4/uol/messages`
@@ -110,7 +112,7 @@ function receberMensagens(mensagens) {
         i--;
       } // verifica o index da ultima mensagem recebida pelo usuario
       mensagens = novasMensagens;
-      for (let index = i; index < novasMensagens.length; index++) {
+      for (let index = i; index < novasMensagens.length; index++) { //TODO Refatorar em uma so funcao *
         // faz o display das mensagens novas
         switch (novasMensagens[index].type) {
           case `status`:
@@ -160,8 +162,8 @@ function receberMensagens(mensagens) {
 
 // Carrega a lista de participantes no sidebar
 function carregaListaDeParticipantes(resposta) {
-  let section = document.querySelector(`#membros`);
-  let listaParticipantesServer = resposta.data;
+  let section = document.querySelector(`#membros`); // elemento que contem os participantes
+  let listaParticipantesServer = resposta.data; // lista de participantes
   section.innerHTML = ``;
   for (index = 0; index < listaParticipantesServer.length; index++) {
       if(listaParticipantesServer[index].name != nomeUsuario) {
@@ -181,9 +183,9 @@ let mensagemTexto = document.querySelector(`input`).value;
 let mensagem = new Mensagem(nomeUsuario, #, mensagemTexto, #);
 const promiseMensagem = axios.post(`https://mock-api.driven.com.br/api/v4/uol/messages`, )
 */
-//! Implementar depois que setar o .type e .to
+//! Implementar depois que setar o .type e .to (2) 
 
-//TODO Lista de membros no sidebar dinamica (1)
+// Lista de membros no sidebar dinamica (1)
 //TODO Selecao de remetente e visibilidade (2) -> lembrar que se selecionar remetente e ele sair, resetar para 'todos'
 //TODO Envio de mensagem (2)
 function Mensagem(from, to, text, type) {
@@ -193,9 +195,4 @@ function Mensagem(from, to, text, type) {
   this.type = type;
 }
 
-/**
- * ! Lembrar que ->
- * let secao = document.querySelector(`#membros`);
- * let membros = secao.querySelectorAll(`.opcao`);
- * membros[0].querySelector(`span`).textContent -> `Nome Pessoa`
- */
+
