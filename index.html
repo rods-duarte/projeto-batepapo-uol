@@ -22,20 +22,19 @@
     <div class="fechar-side-bar" onclick="fecharSideBar()"></div>
     <div class="side-bar">
       <h1>Escolha um contato para enviar mensagem:</h1>
-      <div class="opcao">
+      <div
+        class="opcao selecionado"
+        data-name="Todos"
+        onclick="selecionarRemetente(this)"
+      >
         <ion-icon name="people"></ion-icon>
-        <span>Todos</span>
+        <div class="name">
+          <span>Todos</span>
+          <ion-icon class="check block" name="checkmark"></ion-icon>
+        </div>
       </div>
       <section id="membros">
-        <div class="opcao">
-          <ion-icon name="person-circle"></ion-icon>
-          <span>Joao</span>
-        </div>
-        <div class="opcao">
-          <ion-icon name="person-circle"></ion-icon>
-          <span>Maria</span>
-        </div>
-      </section>
+      <!-- Participantes vao aqui dentro -->
       <h1>Escolha visibilidade:</h1>
       <section>
         <div class="opcao">

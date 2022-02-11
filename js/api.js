@@ -9,6 +9,8 @@ let promiseNomeUsuario = axios.post(
 let promiseParticipantes = axios.get(
   `https://mock-api.driven.com.br/api/v4/uol/participants`
 );
+let remetente = `Todos`;
+
 promiseParticipantes.then(carregaListaDeParticipantes);
 promiseNomeUsuario.catch(checaNome);
 promiseNomeUsuario.then(verificaPresenca);
@@ -22,6 +24,7 @@ setInterval(() => {
   );
   promiseParticipantes.then(carregaListaDeParticipantes);
 }, 10000);
+
 
 // Processa o Promise mensagens
 function processarRespostaMensagem(resposta) {
@@ -164,17 +167,33 @@ function receberMensagens(mensagens) {
 function carregaListaDeParticipantes(resposta) {
   let section = document.querySelector(`#membros`); // elemento que contem os participantes
   let listaParticipantesServer = resposta.data; // lista de participantes
+  
+  let elementoSelecionado = document.querySelector(`.selecionado`).getAttribute(`data-name`);; // Busca o primeiro elemento selecionado 
+  
+  console.log(elementoSelecionado);
   section.innerHTML = ``;
   for (index = 0; index < listaParticipantesServer.length; index++) {
       if(listaParticipantesServer[index].name != nomeUsuario) {
         section.innerHTML += `
-        <div id="${listaParticipantesServer[index].name}" class="opcao">
+        <div class="opcao" data-name="${listaParticipantesServer[index].name}" onclick="selecionarRemetente(this)">
             <ion-icon name="person-circle"></ion-icon>
-            <span>${listaParticipantesServer[index].name}</span>
+            <div class="name">
+              <span>${listaParticipantesServer[index].name}</span>
+              <ion-icon class="check" name="checkmark"></ion-icon>
+            </div>
         </div>
               `;
       }
-    
+  }
+  let elementoSelecionadoDepois = document.querySelector(`[data-name="${elementoSelecionado}"]`);
+  console.log(`elemento selecionado depois ${elementoSelecionadoDepois}`)
+  if(elementoSelecionadoDepois != null) { // Se a pessoa selecionada ainda estiver online remarca-la como selecionada
+    elementoSelecionadoDepois.classList.add(`selecionado`);
+    elementoSelecionadoDepois.querySelector(`.name ion-icon`).classList.add(`block`);
+  } else { // Se a pessoa selecionada nao estiver online selecionar Todos
+    document.querySelector(`[data-name="Todos"]`).classList.add(`selecionado`);
+    document.querySelector(`[data-name="Todos"] .name .check`).classList.add(`block`);
+    remetente = `Todos`;
   }
 }
 
@@ -186,7 +205,7 @@ const promiseMensagem = axios.post(`https://mock-api.driven.com.br/api/v4/uol/me
 //! Implementar depois que setar o .type e .to (2) 
 
 // Lista de membros no sidebar dinamica (1)
-//TODO Selecao de remetente e visibilidade (2) -> lembrar que se selecionar remetente e ele sair, resetar para 'todos'
+// Selecao de remetente e visibilidade (2) -> lembrar que se selecionar remetente e ele sair, resetar para 'todos'
 //TODO Envio de mensagem (2)
 function Mensagem(from, to, text, type) {
   this.from = from;

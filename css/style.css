@@ -65,6 +65,7 @@ input {
   margin-top: 100px;
   margin-bottom: 80px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .caixa-mensagem {
@@ -117,6 +118,15 @@ aside {
   background-color: #fff;
   transition: width 1s ease 0s;
   z-index: 2;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.side-bar::-webkit-scrollbar{
+  display: none;
 }
 
 .fechar-side-bar {
@@ -163,6 +173,26 @@ h1 {
   font-size: 30px;
 }
 
-.opcao > span {
+.name > span {
+  display: inline-block;
   margin-top: 6px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.check {
+  display: none;
+  color: #28BB25;
+  font-size: 18px;
+  margin: 0;
+}
+
+.name {
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+}
+
+.block {display: block;}
+
