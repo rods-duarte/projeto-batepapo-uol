@@ -53,11 +53,22 @@ footer {
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-input {
+textarea {
   width: 75%;
   height: 50px;
   margin-left: 15px;
+  font-size: 16px;
   border: none;
+
+  border: none;
+  outline-color: #e3e3e3;
+  resize: none;
+  font-family: "Roboto", sans-serif;
+}
+
+textarea::placeholder {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Chat e mensagens */
@@ -174,11 +185,14 @@ h1 {
 }
 
 .name > span {
-  display: inline-block;
+  display: block;
   margin-top: 6px;
   max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
+  
+  
+  height: fit-content;
 }
 
 .check {
@@ -194,5 +208,9 @@ h1 {
   width: 75%;
 }
 
-.block {display: block;}
+.block {display: inline-block;}
 
+button {
+  border: none;
+  background-color: #FFF;
+}

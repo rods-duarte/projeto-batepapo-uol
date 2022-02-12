@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bate-papo uol</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -34,65 +38,44 @@
         </div>
       </div>
       <section id="membros">
-      <!-- Participantes vao aqui dentro -->
+        <!-- Participantes vao aqui dentro -->
+      </section>
       <h1>Escolha visibilidade:</h1>
-      <section>
-        <div class="opcao">
+      <section id="visibilidade">
+        <div
+          class="opcao selecionado"
+          data-identifier="visibility"
+          data-name="message"
+          onclick="selecionarVisibilidade(this)"
+        >
           <ion-icon name="lock-open"></ion-icon>
-          <span>Publico</span>
+          <div class="name">
+            <span>Publico</span>
+            <ion-icon class="check block" name="checkmark"></ion-icon>
+          </div>
         </div>
-        <div class="opcao">
+        <div
+          class="opcao"
+          data-identifier="visibility"
+          data-name="private_message"
+          onclick="selecionarVisibilidade(this)"
+        >
           <ion-icon name="lock-closed"></ion-icon>
-          <span>Privado</span>
+          <div class="name">
+            <span>Privado</span>
+            <ion-icon class="check" name="checkmark"></ion-icon>
+          </div>
         </div>
       </section>
     </div>
     <!-- Mensagens -->
-    <main class="chat">
-      <!-- Mensagem -->
-      <div class="caixa-mensagem status">
-        <div class="mensagem">
-          <span class="hora">(9:38:26)</span>
-          <strong class="usuario">Pedro:</strong>
-          <span class="texto"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-            voluptas fugit quae molestias quod, facere iure! Tempore voluptates,
-            explicabo molestiae enim, a, obcaecati dolores earum expedita velit
-            fugiat accusamus aut!
-          </span>
-        </div>
-      </div>
-      <!-- Mensagem -->
-      <div class="caixa-mensagem privada">
-        <div class="mensagem">
-          <span class="hora">(9:38:26)</span>
-          <strong class="usuario">Pedro:</strong>
-          <span class="texto"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-            voluptas fugit quae molestias quod, facere iure! Tempore voluptates,
-            explicabo molestiae enim, a, obcaecati dolores earum expedita velit
-            fugiat accusamus aut!
-          </span>
-        </div>
-      </div>
-      <!-- Mensagem -->
-      <div class="caixa-mensagem">
-        <div class="mensagem">
-          <span class="hora">(9:38:26)</span>
-          <strong class="usuario">Pedro:</strong>
-          <span class="texto"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-            voluptas fugit quae molestias quod, facere iure! Tempore voluptates,
-            explicabo molestiae enim, a, obcaecati dolores earum expedita velit
-            fugiat accusamus aut!
-          </span>
-        </div>
-      </div>
-    </main>
+    <main class="chat"></main>
     <!-- Input de mensagens -->
     <footer>
-      <input type="text" placeholder="Escreva aqui..." />
-      <ion-icon name="paper-plane-outline"></ion-icon>
+      <textarea type="text" placeholder="Escreva aqui..."></textarea>
+      <button data-identifier="send-message" onclick="enviarMensagem()">
+        <ion-icon name="paper-plane-outline"></ion-icon>
+      </button>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script
@@ -104,6 +87,5 @@
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
     <script src="js/script.js"></script>
-    <script src="js/api.js"></script>
   </body>
 </html>
